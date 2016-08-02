@@ -1,0 +1,35 @@
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+jar {
+    baseName = 'gs-gradle'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "joda-time:joda-time:2.2"
+    // https://mvnrepository.com/artifact/org.drools/drools-compiler
+	compile group: 'org.drools', name: 'drools-compiler', version: '7.0.0.Beta1'
+	// https://mvnrepository.com/artifact/org.drools/drools-core
+	compile group: 'org.drools', name: 'drools-core', version: '7.0.0.Beta1'
+	// https://mvnrepository.com/artifact/com.sun.jersey/jersey-core
+compile group: 'com.sun.jersey', name: 'jersey-core', version: '1.19.1'
+	// https://mvnrepository.com/artifact/com.sun.jersey/jersey-json
+compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.19.1'
+	// https://mvnrepository.com/artifact/com.sun.jersey/jersey-servlet
+compile group: 'com.sun.jersey', name: 'jersey-servlet', version: '1.19.1'
+	
+	
+    
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

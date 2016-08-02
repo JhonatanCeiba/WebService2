@@ -1,0 +1,20 @@
+package com.sample
+ 
+import com.drools.DroolsTest.Message1;
+ 
+rule "Hello World"
+    when
+        m : Message1( status == Message1.HELLO, myMessage : message )
+    then
+        System.out.println( myMessage );
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message1.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message1( status == Message1.GOODBYE, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
