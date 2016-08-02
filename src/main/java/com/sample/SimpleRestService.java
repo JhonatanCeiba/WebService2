@@ -24,15 +24,6 @@ public class SimpleRestService {
 	   private static final String SUCCESS_RESULT="<result>success</result>";
 	   private static final String FAILURE_RESULT="<result>failure</result>";
 
-	  @GET
-	   @Path("/drools")
-	   @Produces(MediaType.APPLICATION_XML)
-	 public ArrayList<User> drools(){
-	    return userDao.getAllUsers();
-	 }
-	   
-	  
-	  
 	   @GET
 	   @Path("/users")
 	   @Produces(MediaType.APPLICATION_XML)

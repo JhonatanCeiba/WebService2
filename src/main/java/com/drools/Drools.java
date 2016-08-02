@@ -10,7 +10,6 @@ import org.kie.api.io.Resource;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import com.drools.DroolsTest.Message1;
 
 public class Drools {
 
@@ -43,8 +42,10 @@ public class Drools {
 	            Message1 message1 = new Message1();
 	            message1.setMessage("Hello World");
 	            message1.setStatus(Message1.HELLO);
+	            System.out.println("Antes: "+message1.getStatus());
 	            ksession.insert(message1);
 	            ksession.fireAllRules();
+	            System.out.println("Despues "+message1.getStatus());
 	            
 	        } catch (Throwable t) {
 	            t.printStackTrace();
