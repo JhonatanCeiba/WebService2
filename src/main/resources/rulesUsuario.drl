@@ -1,0 +1,32 @@
+package com.sample
+ 
+import com.drools.Message1;
+import com.sample.Usuario;
+ 
+rule "Minimo"
+    when
+        usuario : Usuario( sueldo < 600)
+    then
+        usuario.setMensaje( "Ustede posee un salario Minimo" );
+end
+
+rule "Medio Bajo"
+    when
+        usuario : Usuario( sueldo >= 600 && sueldo < 1000)
+    then
+        usuario.setMensaje( "Ustede posee un salario Bajo" );
+end
+
+rule "Medio"
+    when
+        usuario : Usuario( sueldo >= 1000 && sueldo < 1500)
+    then
+        usuario.setMensaje( "Ustede posee un salario Intermedio" );
+end
+
+rule "Bueno"
+    when
+        usuario : Usuario( sueldo >= 1500 && sueldo < 2000)
+    then
+        usuario.setMensaje( "Ustede posee un salario Bueno" );
+end

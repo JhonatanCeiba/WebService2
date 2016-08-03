@@ -70,83 +70,41 @@ public class SimpleRestService2 {
 	        }
 	  }
 	  
-	   @GET
-	   @Path("/users")
-	   @Produces(MediaType.APPLICATION_XML)
-	 public ArrayList<User> getUsers(){
-	    return userDao.getAllUsers();
-	 }
-	   
-	   @GET
-	   @Path("/usersJson")
+	  @GET
+	   @Path("/angular")
 	   @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<User> getUsersJson(){
-	    return userDao.getAllUsers();
-	 }
+	  public Usuario angular(@QueryParam("nombre") String nombre,
+			  @QueryParam("sueldo") int sueldo) {
+		  try {
+	    	   KieServices kieServices = KieServices.Factory.get();
+	    	    KieFileSystem kfs = kieServices.newKieFileSystem();
+	    	    KieResources kieResources = kieServices.getResources();
+	    	    Resource resource = kieResources.newClassPathResource("rulesUsuario.drl");
+	    	    kfs.write("src/main/resources/com/sample/rulesUsuario.drl", resource);
+	    	    
+	    	    KieBuilder kieBuilder = kieServices.newKieBuilder( kfs ).buildAll();
+	    	    Results results = kieBuilder.getResults();
+	    	    
+	    	    if( results.hasMessages( Message.Level.ERROR ) ){
+	    	        System.out.println( results.getMessages() );
+	    	        throw new IllegalStateException( "### errors ###" );
+	    	    }
+	    	    KieContainer kieContainer = kieServices.newKieContainer( kieServices.getRepository().getDefaultReleaseId() );
+	    	    KieSession ksession = kieContainer.newKieSession();
 
-	@GET
-	   @Path("/getIds")
-	   @Produces(MediaType.TEXT_PLAIN)
-	public String getSomething(@QueryParam("request") String request ,
-			 @DefaultValue("1") @QueryParam("version") int version) {
-		ArrayList<User> list = userDao.getAllUsers();
-		String valor = "";
-		for (User user:list)
-		{
-			valor += user.getId()+", ";
-		}
-        return valor;	
-	}
-	
-	@GET
-	   @Path("/userId")
-	   @Produces(MediaType.APPLICATION_JSON)
-	   public User getUser(@QueryParam("userid") int userid){
-		 User user = userDao.getUser(userid);
-	      return user;
-	   }
-
-	@GET
-	@Path("/addUser")
-    @Produces(MediaType.APPLICATION_XML)
-	 public ArrayList<User> createUser(@QueryParam("id") int id,
-			 @QueryParam("name") String name,
-			 @QueryParam("profession") String profession) throws IOException
-		  {
-			  ArrayList<User> users = userDao.getAllUsers();
-		      User user = new User(id, name, profession);
-		      int result = userDao.addUser(user,users);
-		      if(result == 1){
-		    	  return users;
-		         //return SUCCESS_RESULT;
-		      }
-		      
-		      return users;
-		      //return FAILURE_RESULT;*/
-		  }
-	
-	 @GET
-	 @Path("/deleteUser")
-	 @Produces(MediaType.APPLICATION_XML)
-	 public ArrayList<User> deleteUser(@QueryParam("userid") int userId)
-	 {
-		 ArrayList<User> users = userDao.getAllUsers();
-		 int resultado = userDao.deleteUser(userId,users);
-		 return users;
-	 }
+	            // go !
+	            Usuario usuario = new Usuario(nombre,sueldo);
+	            ksession.insert(usuario);
+	            ksession.fireAllRules();
+	            return usuario;
+	            
+	        } catch (Throwable t) {
+	            t.printStackTrace();
+	            return null;
+	        }
+	  }
+	  
 	 
-	 @GET
-	 @Path("/update")
-	 @Produces(MediaType.APPLICATION_XML)
-	 public ArrayList<User> update(@QueryParam("id") int id,
-			 @QueryParam("name") String name,
-			 @QueryParam("profession") String profession) throws IOException
-	 {
-		 ArrayList<User> users = userDao.getAllUsers();
-		 User updateUser = new User(id, name, profession);
-		 users = userDao.updateUser(updateUser,users);
-		 return users;
-	 }
 
 	
 }

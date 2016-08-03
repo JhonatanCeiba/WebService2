@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="gemStore">
+  <head>
+    <script type="text/javascript" src="angular.js"></script>
+    <script type="text/javascript" src="xml2json.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </head>
+   <body ng-controller="StoreController as store">
+   	
+   	<input placeholder="Digite aqui su Nombre" ng-model="store.nombre"><br><br>
+    <input placeholder="Digite aqui su salario" ng-model="store.sueldo"><br><br>
+    <button ng-click="store.consultar()" >Consultar</button><br><br>
+    
+      <!--  Esto es por si son varios json -->
+       <!-- <div class="list-group-item" ng-repeat="persona in store.jsonRemoto">
+      	Señor {{persona.nombre}}, su sueldo es de {{persona.sueldo}}. {{persona.mensaje}}
+       </div> -->
+      	<div ng-show="store.mostrarDatos">
+      		Señor {{store.jsonRemoto.nombre}}, su sueldo es de {{store.jsonRemoto.sueldo}}. 
+      		{{store.jsonRemoto.mensaje}}
+      	</div>
+    </div>
+  </body>
+</html>
