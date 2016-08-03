@@ -33,10 +33,8 @@ public class Drools {
 	    	        System.out.println( results.getMessages() );
 	    	        throw new IllegalStateException( "### errors ###" );
 	    	    }
-	    	    
 	    	    KieContainer kieContainer = kieServices.newKieContainer( kieServices.getRepository().getDefaultReleaseId() );
 	    	    KieSession ksession = kieContainer.newKieSession();
-	    	    
 
 	            // go !
 	            Message1 message1 = new Message1();
@@ -52,31 +50,5 @@ public class Drools {
 	        }
 
 	}
-	  public static class Message1 {
-
-	        public static final int HELLO = 0;
-	        public static final int GOODBYE = 1;
-
-	        private String message;
-
-	        private int status;
-
-	        public String getMessage() {
-	            return this.message;
-	        }
-
-	        public void setMessage(String message) {
-	            this.message = message;
-	        }
-
-	        public int getStatus() {
-	            return this.status;
-	        }
-
-	        public void setStatus(int status) {
-	            this.status = status;
-	        }
-
-	    }
 
 }

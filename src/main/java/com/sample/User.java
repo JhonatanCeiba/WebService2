@@ -1,10 +1,9 @@
 package com.sample;
 
-
 import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
 @XmlRootElement(name = "user")
 public class User implements Serializable {
 
@@ -21,6 +20,7 @@ public class User implements Serializable {
       this.profession = profession;
    }
 
+   @XmlElement
    public int getId() {
       return id;
    }

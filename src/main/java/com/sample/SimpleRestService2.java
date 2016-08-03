@@ -23,7 +23,7 @@ import org.kie.api.io.Resource;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import com.drools.Drools.Message1;
+import com.drools.Message1;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class SimpleRestService2 {
 
 	  @GET
 	   @Path("/drools")
-	   @Produces(MediaType.TEXT_PLAIN)
-	  public String drools() {
+	   @Produces(MediaType.APPLICATION_JSON)
+	  public Message1 drools() {
 		  try {
 	    	   KieServices kieServices = KieServices.Factory.get();
 	    	    KieFileSystem kfs = kieServices.newKieFileSystem();
@@ -62,7 +62,7 @@ public class SimpleRestService2 {
 	            message1.setStatus(Message1.HELLO);
 	            ksession.insert(message1);
 	            ksession.fireAllRules();
-	            return message1.getMessage();
+	            return message1;
 	            
 	        } catch (Throwable t) {
 	            t.printStackTrace();
@@ -74,6 +74,13 @@ public class SimpleRestService2 {
 	   @Path("/users")
 	   @Produces(MediaType.APPLICATION_XML)
 	 public ArrayList<User> getUsers(){
+	    return userDao.getAllUsers();
+	 }
+	   
+	   @GET
+	   @Path("/usersJson")
+	   @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<User> getUsersJson(){
 	    return userDao.getAllUsers();
 	 }
 
